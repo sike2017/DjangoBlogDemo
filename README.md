@@ -1,5 +1,6 @@
 # DjangoBlogDemo
 一个尚未完善的采用Django的博客项目,采用叛道的Editor.md作为文章编辑器
+支持本地图片上传
 
 文章编辑页面对外界访问者开放,但无upload password无法上传至服务器
 默认上传密码: 123456
