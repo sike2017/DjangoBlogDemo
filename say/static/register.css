@@ -1,0 +1,9 @@
+body{overflow-y: auto;}
+.registerBox{position: absolute; top: 20%;padding-bottom: 15px;padding-right: 100px;}
+.registerBox li{list-style-type: none;}
+.registerBox li{margin-top: 15px;text-align: right;}
+.registerBox input{height: 20px;margin-left: 100px;}
+.registerBox hr{color: #fffffd;}
+#registerButton{width: 70px;height: 35px;background-color: #00bcd4;color: #ffffff;font-size: 17px;border: 0.5px solid;border-radius: 5px;top: 60%;cursor: pointer;}
+#registerButton:hover{background-color: #00bcff;}
+.upBar{font-size: 40px;position: relative;top: 40px;}

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Suo's_Blog_Archive</title>
+	<link rel="stylesheet" type="text/css" href="/static/archive.css">
+</head>
+<body>
+	<div class="navigation_bar">
+		<a href="/" id="home" class="nav">Suo</a>
+		<label  for="menu-toggle" id="more" class="nav">
+			+
+		</label>
+		<input type="checkbox" id="menu-toggle">
+		<ul id="menu">
+			<li><a href="/archive/time/">归档</a></li>
+			<li><a href="/write/">写作</a></li>
+			<li><a href="/about/">关于</a></li>
+		</ul>
+	</div>
+	<div class="show">
+		<span class="title">Archive</span>
+		<hr id="below_title">
+		{% for book in rlist %}
+		<div class="year">
+			<span class="yearNum">{{book.0}}</span>
+			{% for article in book.1 %}
+			<li class="{{book.0}}">
+				<span><i>{{article.publish_time|date:"Y/m"}}</i></span>
+				<a href="/detail/id={{article.id}}">{{article.caption}}</a>
+			</li>
+			{% endfor %}
+		</div>
+		{% endfor %}
+	</div>
+</body>
+</html>

@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>editormd</title>
+	<script type="text/javascript" src="/static/js/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" src="/static/editor.md/editormd.min.js"></script>
+	<script type="text/javascript" src="/static/js/jsencrypt.js"></script>
+	<link rel="stylesheet" href="/static/editor.md/css/editormd.css">
+	<link rel="stylesheet" type="text/css" href="/static/write.css">
+</head>
+<body>
+	<script type="text/javascript">
+		function contentEncrypt(data,publicKey){
+			var encrypt=new JSEncrypt();
+			encrypt.setPublicKey(publicKey);
+			var encryptedContent=encrypt.encrypt(data);
+			alert(encryptedContent);
+			return encryptedContent;
+		}
+		function HTMLDecode(text) { 
+    			var temp = document.createElement("div"); 
+    			temp.innerHTML = text; 
+    			var output = temp.innerText || temp.textContent; 
+    			temp = null; 
+    			return output; 
+		};
+		function fun(url){
+			html_code=document.getElementsByName("test-editormd-html-code")[0].innerHTML;
+			if(html_code.length==0){
+				alert("input empty");
+				return 0;
+			}
+			html_code=HTMLDecode(html_code);
+			markdown_content="";
+			var line=document.getElementsByTagName("pre");
+			for (i=0; i<line.length;i++){
+				t=line[i].innerText;
+				markdown_content=markdown_content+t;
+				markdown_content=markdown_content+'\n';
+			}
+			if(classification.length==0){
+				classification="ntest";
+			}
+			if(caption.length==0){
+				if(html_code.search(/<h1.*>.*<\/h1.*>/)==-1){
+					alert("caption empty");
+					return 0;
+				}
+				alert("Set the 1st level text at start of the text as caption, write the caption clearly is a better choice.");
+				if(times==0 && rId==-1){
+					if(subcaption.length!=0){
+						$.post(url,{"markdown_content":markdown_content,"content":html_code,"author":"suo","classification":classification,"subcaption":subcaption,"pd":pd},function(data){id=data.id;},"json");
+					}
+					else{
+						$.post(url,{"markdown_content":markdown_content,"content":html_code,"author":"suo","classification":classification,"pd":pd},function(data){id=data.id;},"json");
+					}
+					times=times+1;
+					alert("upload done");
+				}
+				else{
+					if(rId!=-1){
+						if(subcaption.length!=0){
+							$.post(url,{"markdown_content":markdown_content,"content":html_code,"author":"suo","classification":classification,"subcaption":subcaption,"id":rId,"pd":pd},function(data){id=data.id;},"json");
+						}
+						else{
+							$.post(url,{"markdown_content":markdown_content,"content":html_code,"author":"suo","classification":classification,"id":rId,"pd":pd},function(data){id=data.id;},"json");
+						}
+						alert("update done");
+						return 1;
+					}
+					if(subcaption.length!=0){
+						$.post(url,{"markdown_content":markdown_content,"content":html_code,"author":"suo","classification":classification,"subcaption":subcaption,"id":id,"pd":pd},function(data){id=data.id;},"json");
+					}
+					else{
+						$.post(url,{"markdown_content":markdown_content,"content":html_code,"author":"suo","classification":classification,"id":id,"pd":pd},"json");
+					}
+					times=times+1;
+					alert("update done");
+				}
+			}
+			else{
+				if(times==0 && rId==-1){
+					if(subcaption.length!=0){
+						$.post(url,{"markdown_content":markdown_content,"content":html_code,"caption":caption,"author":"suo","classification":classification,"subcaption":subcaption,"pd":pd},function(data){id=data.id;},"json");
+					}
+					else{
+						$.post(url,{"markdown_content":markdown_content,"content":html_code,"caption":caption,"author":"suo","classification":classification,"pd":pd},function(data){id=data.id;},"json");
+					}
+					times=times+1;
+					alert("upload done");
+				}
+				else{
+					if(subcaption.length!=0){
+						$.post(url,{"markdown_content":markdown_content,"content":html_code,"caption":caption,"author":"suo","classification":classification,"subcaption":subcaption,"id":id,"pd":pd},function(data){id=data.id;},"json");
+					}
+					else{
+						$.post(url,{"markdown_content":markdown_content,"content":html_code,"caption":caption,"author":"suo","classification":classification,"id":id,"pd":pd},function(data){id=data.id;},"json");
+					}
+					times=times+1;
+					alert("update done");
+				}
+			}
+		};
+		function settingDialog(){
+			var diag=document.getElementById("settingDialog");
+			if(classification.length!=0){
+				document.getElementsByName("classification")[0].value=classification;
+			}
+			if(subcaption.length!=0){
+				document.getElementsByName("subcaption")[0].value=subcaption;
+			}
+			if(caption.length!=0){
+				document.getElementsByName("caption")[0].value=caption;
+			}
+			if(pd.length!=0){
+				document.getElementsByName("pd")[0].value=pd;
+			}
+			diag.style="display: block;";
+		};
+		function setDone(){
+			classification=document.getElementsByName("classification")[0].value;
+			subcaption=document.getElementsByName("subcaption")[0].value;
+			caption=document.getElementsByName("caption")[0].value;
+			pd=document.getElementsByName("pd")[0].value;
+			var diag=document.getElementById("settingDialog");
+			diag.style="display: none;";
+		};
+		function setCancel(){
+			var diag=document.getElementById("settingDialog");
+			diag.style="display: none;"
+		};
+		// function setCaption(){
+		// 	caption=document.getElementById("myButton").value;
+		// };
+		var pd="";
+		var times=0;
+		var rId={{list.1}};
+		var id=-1;
+		var caption="";
+		var classification="";
+		var subcaption="";
+		//试图直接将元素插入editor.md工具栏
+		// var classification=document.createElement("li");
+		// var divider=document.createElement("li");
+		// divider.class="divider";
+		// divider.unselectable="on";
+		// divider.innerHTML="|";
+		// document.getElementsByClassName("editormd-menu").appendChild(divider);
+		// var inputBar=document.createElement("input");
+		// inputBar.type="text";
+		// inputBar.name="calssification";
+		// classification.innerHTML="caption: ";
+		// classification.appendChild(inputBar);
+		// document.getElementsByClassName("editormd-menu").appendChild(classification);
+		// var setCaption=document.createElement("li");
+		// var button=document.createElement("button");
+		// button.id="myButton";
+		// button.innerHTML="set caption";
+		// button.onclick="setCaption()";
+		// setCaption.appendChild(button);
+		// document.getElementsByClassName("editormd-menu").appendChild(setCaption);
+	</script>
+	<div id="settingDialog" style="display:none;">
+		<li>classification: <input type="text" name="classification" placeholder="can be empty, default ntest"></li>
+		<li>subcaption: <input type="text" name="subcaption" placeholder="can be empty, default empty"></li>
+		<li>caption: <input type="text" name="caption" placeholder="write here of write in main text"></li>
+		<li>upload password: <input type="text" name="pd" placeholder="write it or upload nothing"></li>
+		<button type="button" onclick="setDone()" class="buttonDone">DONE</button>
+		<button type="button" onclick="setCancel()" class="buttonCancel">Cancel</button>
+	</div>
+	<div class="navigation_bar">
+		<a href="/" id="home" class="nav">Suo</a>
+		<label  for="menu-toggle" id="more" class="nav">
+			+
+		</label>
+		<input type="checkbox" id="menu-toggle">
+		<ul id="menu">
+			<li><a href="/archive/time">归档</a></li>
+			<li><a href="/about">关于</a></li>
+			<li><button type="button" onclick="fun('/editorText')" id="upload">Upload</button></li>
+			<li><button type="button" onclick="settingDialog()" id="setting">Setting</button></li>
+		</ul>
+	</div>
+	<div id=test-editormd>
+		<textarea style="display:none;">{{ list.0 }}</textarea>
+	</div>
+	<script type="text/javascript">
+		var testEditormd;
+
+		$(function() {
+		 testEditormd=editormd('test-editormd',{
+			width:"90%",
+			height:"640",
+			toc:true,
+			tex:true,
+			flowChart:true,
+			emoji:true,
+			taskList:true,
+			path:'/static/editor.md/lib/',
+			imageUpload:true,
+			imageFormats:['jpg','jpeg','png','bmp','webp','gif'],
+			imageUploadURL:'/editorPic',
+			saveHTMLToTextarea : true,
+			codeFold:true,
+		 });
+		});
+	</script>
+</body>
+</html>

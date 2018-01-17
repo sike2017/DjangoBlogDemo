@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Suo 博客 | Suo</title>
+		<link rel="stylesheet" type="text/css" href="/static/index.css">
+	</head>
+	<body>
+		<div class="page">
+			<div class="nav_body">
+				<div class="nav">
+					<a href="/" id="home" class="nav_item">
+						Suo
+					</a>
+					<ul class="nav_item">
+						<div id="more">+</div>
+						<li class="inside_item"><a href="archive/time">归档</a></li>
+						<li class="inside_item"><a href="write/">写作</a></li>
+						<li class="inside_item"><a href="about/">关于</a></li>
+					</ul>
+				</div>
+				<strong class="foot">Record Something</strong>
+				<strong id="some">Powered by Django</strong>
+			</div>
+			<div class="blog_body">
+				{% for blog in blogs %}
+				<div class="blog_item">
+					<div class="blog_title"><strong><a href="detail/id={{blog.id}}">{{blog.caption}}</a></strong></div>
+					<div class="blog_info">
+						<ul>
+							<li class="time"><i>{{blog.publish_time|date:"Y-m-d H:i"}}</i></li>
+						</ul>
+					</div>
+					<div class="blog_content">
+						{% autoescape off %}
+						{{blog.content}}
+						{% endautoescape %}
+					</div>
+				</div>
+				<hr>
+				{%endfor%}
+			</div>
+		</div>
+	</body>
+</html>

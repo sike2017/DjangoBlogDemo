@@ -1,0 +1,51 @@
+#home{
+	color:#ffffff;
+	background-color:#000000;
+	width:125px;
+	height:35px;
+	text-align: center;
+	padding-left:5px;
+	margin-left: 4px;
+	margin-top: 7px;
+	font-size: 25px;
+	text-decoration: none;
+	padding-right:5px;
+}
+#more{
+	color:#ffffff;
+	background-color: #000000;
+	width:35px;
+	height: 35px;
+	margin-left: -2px;
+	margin-top: 7px;
+	font-size: 25px;
+	padding-left: 3px;
+	padding-right: 3px;
+}
+#more:hover{background-color: #0000ff;}
+.nav{display: inline;}
+#menu{display: none;}
+#more{cursor: pointer;}
+#menu-toggle{display: none;}
+#menu{list-style-type: none;}
+#menu-toggle:checked + #menu{display: block;}
+.navigation_bar{position: fixed;left: 0;}
+#menu li{
+	width: 100px;
+	margin-top: 2px;
+	background-color:#000000;
+	font-size: 25px;
+	text-align: center;
+}
+#menu li a{color:#ffffff;text-decoration: none;}
+#menu{padding-top: 2px;padding-left: 4px;margin-top: 0;}
+#menu li a:hover{color:#00bcd4;}
+.show{margin-left:230px;margin-right: 230px;}
+.title{font-size: 25px;text-align: center;color:#de1a1a;}
+.year{margin-top: 30px;}
+#below_title{margin-bottom: 58px;}
+.year>li{padding-left: 5px;font-size: 20px;margin-left: 0;list-style-type: none;}
+.year>li>span{margin-right: 3px;}
+.year a{text-decoration: none;}
+.yearNum{font-size: 22px;margin-bottom: 4px;margin-left: 0;margin-right: 4px;position: relative;left: -54px;bottom: -25px;}
+.year>li{border-left: 0.7px solid gray;}

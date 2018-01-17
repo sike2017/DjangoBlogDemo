@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh">
+	<title>register</title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="/static/register.css">
+	<script type="text/javascript" src="/static/js/jquery-3.2.1.min.js"></script>
+</head>
+<body>
+	<div class="upBar">Add User</div>
+	<ul class="registerBox">
+		<li id="lusername"><span class="in">用户名: </span><input type="text" id="username" maxlength="50"></li>
+		<hr>
+		<li id="lpassword"><span class="in">密码: </span><input type="password" id="password" maxlength="50"></li>
+		<li id="lrepassword"><span class="in">确认密码: </span><input type="password" id="repassword" maxlength="50"></li>
+		<hr>
+		<li id="lemail"><span class="in">e-mail: </span><input type="text" id="email" placeholder="can be empty"></li>
+		<hr>
+		<li>github: <input type="text" id="git" placeholder="can be empty"></li>
+		<li><button id="registerButton" onclick="register('registData/')">注册</button></li>
+	</ul>
+	<script type="text/javascript">
+		function register(url){
+			var t=0;
+			var username=document.getElementById("username");
+			if(username.value.length==0 && document.getElementById("msg_username")==null){
+				document.getElementById("username").style="border-color: #ff0000;";
+				msg=document.createElement("li");
+				msg.innerHTML="用户名不能为空";
+				msg.id="msg_username"
+				document.getElementById("lusername").appendChild(msg);
+				t=t+1;
+			};
+			var password=document.getElementById("password").value;
+			var repassword=document.getElementById("repassword").value;
+			if(password.length==0 && document.getElementById("msg_password")==null){
+				document.getElementById("password").style="border-color: #ff0000;";
+				msg=document.createElement("li");
+				msg.innerHTML="密码不能为空";
+				msg.id="msg_password";
+				document.getElementById("lpassword").appendChild(msg);
+				t=t+2;
+			};
+			if(password!=repassword && document.getElementById("msg_repassword")==null){
+				document.getElementById("repassword").style="border-color: #ff0000;";
+				msg=document.createElement("li");
+				msg.innerHTML="确认密码与输入密码不符";
+				msg.id="msg_repassword";
+				document.getElementById("lrepassword").appendChild(msg);
+				t=t+3;
+			};
+			var email=document.getElementById("email").value;
+			if(email.length!=0 && email.search(/.+@.+\./)==-1 && document.getElementById("msg_email")==null){
+				document.getElementById("email").style="border-color: #ff0000;";
+				document.getElementById("email");
+				msg=document.createElement("li");
+				msg.innerHTML="email格式错误";
+				msg.id="msg_email";
+				lemail=document.getElementById("lemail");
+				lemail.appendChild(msg);
+				t=t+4;
+			};
+			if(username.value.length!=0){
+				if(document.getElementById("msg_username")!=null){
+					deleteItem(document.getElementById("msg_username"));
+				}
+			};
+			if(password.length!=0){
+				if(document.getElementById("msg_password")!=null){
+					deleteItem(document.getElementById("msg_password"));
+				}
+			};
+			if(password==repassword){
+				if(document.getElementById("msg_repassword")!=null){
+					deleteItem(document.getElementById("msg_repassword"));
+				}
+			};
+			if(email.length!=0 && email.search(/.+@.+\./)!=-1){
+				if(document.getElementById("msg_email")!=null){
+					deleteItem(document.getElementById("msg_email"));
+				}
+			};
+			if(t>0){
+				return 0;
+			};
+			git=document.getElementById("git").value;
+			if(email.length!=0){
+				if(git.length!=0){
+					$.post(url,{"username":username.value,"psd":password,"email":email,"git":git},function(data){if(data.success==1){alert(data.message)}else{alert(data.message);}},"json");
+				}
+				else{
+					$.post(url,{"username":username.value,"psd":password,"email":email},function(data){if(data.success==1){alert(data.message)}else{alert(data.message);}},"json");
+				}
+			}
+			else{
+				if(git.length!=0){
+					$.post(url,{"username":username.value,"psd":password,"git":git},function(data){if(data.success==1){alert(data.message)}else{alert(data.message);}},"json");
+				}
+				else{
+					$.post(url,{"username":username.value,"psd":password},function(data){if(data.success==1){alert(data.message)}else{alert(data.message);}},"json");
+				}
+			};
+		};
+		function deleteItem(item){
+			item.parentNode.removeChild(item);
+		};
+	</script>
+</body>
+</html>
