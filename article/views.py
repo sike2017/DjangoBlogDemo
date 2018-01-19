@@ -128,7 +128,7 @@ class write:
 				return str(soup)
 		if request.method=='POST':
 			dic=request.POST
-			if dic['pd']!=r'abn^`\/`':
+			if dic['pd']!=r'123456':
 				rdic={'messsage':'pd error, refuse to update page'}
 				return HttpResponse(json.dumps(rdic))
 			if 'id' in dic:
