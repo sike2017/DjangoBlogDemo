@@ -20,7 +20,7 @@ def register(request):
 		if 'git' in dic:
 			user.git=dic['git']
 		user.save()
-		rdic={'success':1,'message':'sign up done'}
+		rdic={'success':1,'message':'register successfully'}
 		return HttpResponse(json.dumps(rdic))
 	rdic={'success':0,'message':'if you are looking this, that meaning you are access the url without GET or POST'}
 	return HttpResponse(json.dumps(rdic))
@@ -46,10 +46,16 @@ def loginChecker(request):
 						rdic={'success':0,'message':'username or password is wrong'}
 						return HttpResponse(json.dumps(rdic),content_type='application/json')
 					else:
-						logined.objects.create(user=user[0],ip=ip)
-						rdic={'success':1,'message':'sign in successfully'}
-						return HttpResponse(json.dumps(rdic),content_type='application/json')
-					return HttpResponse(json.dumps(rdic),content_type='application/json')
+						if len(logined.objects.filter(user=user[0]))==0:
+							logined.objects.create(user=user[0],ip=ip)
+							rdic={'success':1,'message':'sign in successfully'}
+							return HttpResponse(json.dumps(rdic),content_type='application/json')
+						else:
+							for item in logined.objects.filter(user=user[0]):
+								item.delete()
+							logined.objects.create(user=user[0],ip=ip)
+							rdic={'success':2,'message':'your account was already logined at another network, we kick it out, and you sign in successfully'}
+							return HttpResponse(json.dumps(rdic),content_type='application/json')
 				else:
 					rdic={'success':0,'message':'username or password is wrong'}
 					return HttpResponse(json.dumps(rdic),content_type='application/json')

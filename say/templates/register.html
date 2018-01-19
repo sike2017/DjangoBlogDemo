@@ -86,24 +86,29 @@
 			git=document.getElementById("git").value;
 			if(email.length!=0){
 				if(git.length!=0){
-					$.post(url,{"username":username.value,"psd":password,"email":email,"git":git},function(data){if(data.success==1){alert(data.message)}else{alert(data.message);}},"json");
+					$.post(url,{"username":username.value,"psd":password,"email":email,"git":git},function(data){if(data.success==1){alert("register successfully");goToPlace("/");}else{alert(data.message);}},"json");
 				}
 				else{
-					$.post(url,{"username":username.value,"psd":password,"email":email},function(data){if(data.success==1){alert(data.message)}else{alert(data.message);}},"json");
+					$.post(url,{"username":username.value,"psd":password,"email":email},function(data){if(data.success==1){alert("register successfully");goToPlace("/");}else{alert(data.message);}},"json");
 				}
 			}
 			else{
 				if(git.length!=0){
-					$.post(url,{"username":username.value,"psd":password,"git":git},function(data){if(data.success==1){alert(data.message)}else{alert(data.message);}},"json");
+					$.post(url,{"username":username.value,"psd":password,"git":git},function(data){if(data.success==1){alert("register successfully");goToPlace("/");}else{alert(data.message);}},"json");
 				}
 				else{
-					$.post(url,{"username":username.value,"psd":password},function(data){if(data.success==1){alert(data.message)}else{alert(data.message);}},"json");
+					$.post(url,{"username":username.value,"psd":password},function(data){if(data.success==1){alert("register successfully");goToPlace("/");}else{alert(data.message);}},"json");
 				}
 			};
 		};
 		function deleteItem(item){
 			item.parentNode.removeChild(item);
 		};
+		function goToPlace(place){
+			var link=document.createElement("a");
+			link.href=place;
+			link.click();
+		}
 	</script>
 </body>
 </html>
